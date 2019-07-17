@@ -1,4 +1,4 @@
-version: "3"
+version: "3.7"
 
 # More info at https://github.com/pi-hole/docker-pi-hole/ and https://docs.pi-hole.net/
 services:
@@ -27,9 +27,13 @@ services:
       - NET_ADMIN
     restart: unless-stopped
 
+  # could save as an image
   cloudflared:
     container_name: cloudflared
-    image: visibilityspots/cloudflared:amd64
+    build:
+      context: ./dns-over-https2
+    ports:
+      - "53:53/tcp"
     restart: unless-stopped
 
   openvpn:
